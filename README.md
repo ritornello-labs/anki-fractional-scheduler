@@ -19,6 +19,9 @@ or have no unsuspended new cards available.
 
 ![Fractional Scheduler config dialog](docs/images/config-window.png)
 
+[Animated tour](https://ritornello.dev/media/ankiweb/2026-07-30/fractional-scheduler/preview.gif)
+· [MP4 video](https://ritornello.dev/media/ankiweb/2026-07-30/fractional-scheduler/demo.mp4)
+
 ## Install
 
 Requires Anki 2.1.55 or newer.
