@@ -5,7 +5,7 @@ import os
 import sys
 
 from aqt import gui_hooks, mw
-from aqt.qt import QTimer
+from aqt.qt import QApplication, QTimer
 
 RESULT_ENV = "ANKI_ADDON_WORKBENCH_RESULT"
 ADDON_MODULE = "fractional_scheduler"
@@ -19,13 +19,41 @@ def _write(payload: dict) -> None:
 
 def _run_checks() -> None:
     try:
-        tools_actions = [action.text() for action in mw.form.menuTools.actions()]
+        actions = list(mw.form.menuTools.actions())
+        tools_actions = [action.text() for action in actions]
+        config_action = next(
+            (action for action in actions if action.text() == TOOLS_ACTION),
+            None,
+        )
+        dialog_state = {"opened": False, "title": ""}
+
+        def inspect_then_close_dialog() -> None:
+            dialog = QApplication.activeModalWidget()
+            if dialog is None:
+                return
+            dialog_state["opened"] = True
+            dialog_state["title"] = dialog.windowTitle()
+            QTimer.singleShot(3_000, dialog.reject)
+
+        if config_action is not None:
+            QTimer.singleShot(500, inspect_then_close_dialog)
+            config_action.trigger()
+
         _write(
             {
-                "ok": ADDON_MODULE in sys.modules and TOOLS_ACTION in tools_actions,
+                "ok": (
+                    ADDON_MODULE in sys.modules
+                    and TOOLS_ACTION in tools_actions
+                    and dialog_state["opened"]
+                ),
                 "checks": [
                     {"name": "addon module loaded", "ok": ADDON_MODULE in sys.modules},
                     {"name": "Tools action registered", "ok": TOOLS_ACTION in tools_actions},
+                    {
+                        "name": "config dialog opens",
+                        "ok": dialog_state["opened"],
+                        "title": dialog_state["title"],
+                    },
                 ],
                 "tools_actions": tools_actions,
             }
