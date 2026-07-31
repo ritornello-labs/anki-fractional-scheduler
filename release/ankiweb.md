@@ -9,14 +9,6 @@ Use it when some decks deserve a slow trickle of new material instead of a fixed
 
 It also includes deck health badges: schedule rules can mark decks when a deck or its monitored descendants are blocked by 0/day limits or have no unsuspended new cards available.
 
-![Real Fractional Scheduler window opening inside Anki](https://ritornello.dev/media/ankiweb/2026-07-31/fractional-scheduler/preview.gif)
-
-<img alt="Fractional Scheduler config dialog with two schedules and a 14-day preview" src="https://ritornello.dev/media/ankiweb/2026-07-31/fractional-scheduler/gallery-01.png" width="760">
-
-![The real empty-state configuration window](https://ritornello.dev/media/ankiweb/2026-07-31/fractional-scheduler/gallery-03.png)
-
-[Watch the full Fractional Scheduler interaction (MP4)](https://ritornello.dev/media/ankiweb/2026-07-31/fractional-scheduler/demo.mp4)
-
 Features:
 
 - Every-N-days schedules, including fractional patterns like 1 every 3 days.
