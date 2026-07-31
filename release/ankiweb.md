@@ -5,6 +5,18 @@ support_url: https://github.com/ritornello-labs/anki-fractional-scheduler
 
 Fractional New-Card Scheduler lets you pace new cards below whole-number daily limits, such as introducing 1 new card every 3 days, while still using Anki's Today-only new-card limits.
 
+## See it in Anki
+
+![Create a fractional schedule and inspect global settings](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/preview.gif)
+
+![Empty scheduler ready for its first rule](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/gallery-01.png)
+
+![Per-schedule configuration and preview](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/gallery-02.png)
+
+![Automatic-apply settings](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/gallery-03.png)
+
+[Full-resolution MP4](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/demo.mp4)
+
 Use it when some decks deserve a slow trickle of new material instead of a fixed whole number every day. The add-on can target exact decks or wildcard deck groups, preview the next 14 days, and apply the resulting Today-only limits automatically on profile open, collection open, or before sync.
 
 It also includes deck health badges: schedule rules can mark decks when a deck or its monitored descendants are blocked by 0/day limits or have no unsuspended new cards available.

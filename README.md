@@ -17,7 +17,9 @@ day.
 It also includes deck health badges for decks that are blocked by `0/day` limits
 or have no unsuspended new cards available.
 
-![Fractional Scheduler config dialog](docs/images/config-window.png)
+[![Create a fractional schedule and inspect its settings](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/preview.gif)](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/demo.mp4)
+
+[Browse the full media gallery](https://ritornello.dev/#fractional-scheduler).
 
 ## Install
 
