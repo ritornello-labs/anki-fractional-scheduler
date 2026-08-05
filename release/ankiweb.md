@@ -7,15 +7,9 @@ Fractional New-Card Scheduler lets you pace new cards below whole-number daily l
 
 ## See it in Anki
 
-![Create a fractional schedule and inspect global settings](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/preview.gif)
+![A populated language trickle with a 14-day preview](https://ritornello.dev/media/ankiweb/2026-08-05-v3/fractional-scheduler/gallery-01.png)
 
-![Empty scheduler ready for its first rule](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/gallery-01.png)
-
-![Per-schedule configuration and preview](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/gallery-02.png)
-
-![Automatic-apply settings](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/gallery-03.png)
-
-[Full-resolution MP4](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/demo.mp4)
+![Fractional limits across a realistic nested deck tree](https://ritornello.dev/media/ankiweb/2026-08-05-v3/fractional-scheduler/gallery-02.png)
 
 Use it when some decks deserve a slow trickle of new material instead of a fixed whole number every day. The add-on can target exact decks or wildcard deck groups, preview the next 14 days, and apply the resulting Today-only limits automatically on profile open, collection open, or before sync.
 

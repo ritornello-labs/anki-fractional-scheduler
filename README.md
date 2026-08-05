@@ -17,7 +17,9 @@ day.
 It also includes deck health badges for decks that are blocked by `0/day` limits
 or have no unsuspended new cards available.
 
-[![Create a fractional schedule and inspect its settings](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/preview.gif)](https://ritornello.dev/media/ankiweb/2026-07-31-v2/fractional-scheduler/demo.mp4)
+![A populated fractional schedule with a 14-day trickle preview](https://ritornello.dev/media/ankiweb/2026-08-05-v3/fractional-scheduler/gallery-01.png)
+
+![Fractional limits applied across a realistic nested deck tree](https://ritornello.dev/media/ankiweb/2026-08-05-v3/fractional-scheduler/gallery-02.png)
 
 [Browse the full media gallery](https://ritornello.dev/#fractional-scheduler).
 
