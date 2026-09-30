@@ -37,3 +37,5 @@ Features:
 Requires Anki 2.1.55 or newer.
 
 GitHub: [https://github.com/ritornello-labs/anki-fractional-scheduler](https://github.com/ritornello-labs/anki-fractional-scheduler)
+
+Support continued development: [ritornello.dev/support](https://ritornello.dev/support).

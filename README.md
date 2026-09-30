@@ -178,3 +178,5 @@ git-ignored `.env` file.
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+Support continued development: [ritornello.dev/support](https://ritornello.dev/support).
