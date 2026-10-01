@@ -3,6 +3,10 @@ title: Fractional New-Card Scheduler
 support_url: https://github.com/ritornello-labs/anki-fractional-scheduler
 ---
 
+<img src="https://ritornello.dev/media/brand/listing-banner-v1.png" alt="Ritornello" width="700">
+
+[Explore all Ritornello decks and add-ons](https://ritornello.dev/).
+
 Fractional New-Card Scheduler lets you pace new cards below whole-number daily limits, such as introducing 1 new card every 3 days, while still using Anki's Today-only new-card limits.
 
 ## See it in Anki
