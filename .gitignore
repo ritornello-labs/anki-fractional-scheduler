@@ -15,3 +15,4 @@ out/
 .ruff-env/
 .uv-cache/
 .xdg-data/
+.tmp/
