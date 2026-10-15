@@ -1,5 +1,7 @@
 # Fractional New-Card Scheduler
 
+[Explore all Ritornello decks and add-ons](https://ritornello.dev/).
+
 [![AnkiWeb add-on 304166926](https://img.shields.io/badge/AnkiWeb-304166926-2f80ed)](https://ankiweb.net/shared/info/304166926)
 [![Source on GitHub](https://img.shields.io/badge/source-GitHub-24292f)](https://github.com/ritornello-labs/anki-fractional-scheduler)
 ![Anki 2.1.55+](https://img.shields.io/badge/Anki-%3E%3D2.1.55-4caf50)
@@ -17,9 +19,7 @@ day.
 It also includes deck health badges for decks that are blocked by `0/day` limits
 or have no unsuspended new cards available.
 
-![A populated fractional schedule with a 14-day trickle preview](https://ritornello.dev/media/ankiweb/2026-08-05-v3/fractional-scheduler/gallery-01.png)
-
-![Fractional limits applied across a realistic nested deck tree](https://ritornello.dev/media/ankiweb/2026-08-05-v3/fractional-scheduler/gallery-02.png)
+![Preview a one-every-three-days schedule and inspect grouped-deck balance](https://ritornello.dev/media/ankiweb/2026-10-07-v7/fractional-scheduler/schedule.gif)
 
 [Browse the full media gallery](https://ritornello.dev/#fractional-scheduler).
 
@@ -35,6 +35,10 @@ Requires Anki 2.1.55 or newer.
 4. Use `Tools -> Fractional Scheduler: Open Config` to edit config.
 
 AnkiWeb page: <https://ankiweb.net/shared/info/304166926>
+
+### From a GitHub release
+
+Download the `.ankiaddon` from the [latest tagged release](https://github.com/ritornello-labs/anki-fractional-scheduler/releases/latest), then use **Tools → Add-ons → Install from file…**. File installs do not receive AnkiWeb automatic updates.
 
 ### From Source
 
