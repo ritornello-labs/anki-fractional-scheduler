@@ -17,6 +17,12 @@ shared daily budget derived from the configured fraction. Decks that actually
 introduce a new card move to the back of the queue. Decks that were available
 but not studied keep their place.
 
+Decks without an available new card are skipped until they can supply one again.
+This includes exhausted decks and decks whose remaining new cards are suspended,
+buried, or held in a filtered deck. The group's daily budget stays the same, so
+an exhausted deck does not block introductions from the remaining decks. A deck
+that supplies its last new card still uses its allowance for that day.
+
 This means a skipped day does not create a catch-up spike the next day. The
 tradeoff is that an individual deck may wait a little longer than its nominal
 cadence when other decks are also waiting.

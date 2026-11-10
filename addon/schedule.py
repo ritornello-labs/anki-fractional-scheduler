@@ -1110,6 +1110,8 @@ def _preview_balance_first_sequences_by_deck(
     results = {deck.deck_id: [0] * days for deck in scheduled_decks}
     queue = list(queue_state["queue_now"])
     for offset in range(days):
+        if offset and queue_state.get("available_deck_ids") is not None:
+            queue = [deck_id for deck_id in queue if deck_id in queue_state["available_deck_ids"]]
         budget = budget_pattern[(raw_day_index + offset) % len(budget_pattern)]
         todays_queue = queue[: max(0, budget)]
         for deck_id in todays_queue:
@@ -1139,6 +1141,37 @@ def _balance_first_queue_state(
     )
 
 
+def _available_balance_first_decks(
+    col,
+    scheduled_decks: List[DeckInfo],
+    all_decks: List[DeckInfo],
+) -> Optional[Set[int]]:
+    """Find decks that can currently supply a new card, including descendants."""
+    source_to_targets: Dict[int, Set[int]] = {}
+    for target in scheduled_decks:
+        for source in all_decks:
+            if source.deck_id == target.deck_id or source.name.startswith(f"{target.name}::"):
+                source_to_targets.setdefault(source.deck_id, set()).add(target.deck_id)
+    if not source_to_targets:
+        return set()
+    source_ids = sorted(source_to_targets)
+    placeholders = ",".join("?" for _ in source_ids)
+    try:
+        rows = col.db.all(
+            f"select distinct did from cards where type = 0 and queue = 0 "
+            f"and odid = 0 and did in ({placeholders})",
+            *source_ids,
+        )
+        available: Set[int] = set()
+        for (source_id,) in rows:
+            available.update(source_to_targets.get(int(source_id), set()))
+        return available
+    except Exception:
+        # Older client adapters may not expose card availability. Retain their
+        # existing rotation rather than changing limits on incomplete evidence.
+        return None
+
+
 def _balance_first_queue_state_for_day_index(
     col,
     schedule: Dict[str, Any],
@@ -1153,11 +1186,19 @@ def _balance_first_queue_state_for_day_index(
         return None
 
     queue_before_today = [deck.deck_id for deck in _stable_deck_order(schedule, scheduled_decks)]
-    history_limit = raw_day_index + 1 if include_current_day_events else raw_day_index
+    source_decks = all_decks or _collect_decks(col)
+    available_deck_ids = _available_balance_first_decks(col, scheduled_decks, source_decks)
+    # A just-finished deck must still own today's allowance. Otherwise applying
+    # again after its last introduction would release another country's card.
+    history_limit = (
+        raw_day_index + 1
+        if include_current_day_events or available_deck_ids is not None
+        else raw_day_index
+    )
     events_by_deck = _new_introduction_events_by_assigned_deck(
         col,
         epoch,
-        all_decks or _collect_decks(col),
+        source_decks,
         scheduled_decks,
         history_limit,
         start_day_index=None,
@@ -1171,6 +1212,11 @@ def _balance_first_queue_state_for_day_index(
     past_events = [event for event in all_events if event.day_index < raw_day_index]
     for event in past_events:
         queue_before_today = _rotate_deck_to_back(queue_before_today, event.deck_id)
+
+    introduced_today = {event.deck_id for event in all_events if event.day_index == raw_day_index}
+    if available_deck_ids is not None:
+        eligible_today = available_deck_ids | introduced_today
+        queue_before_today = [deck_id for deck_id in queue_before_today if deck_id in eligible_today]
 
     budget_pattern = _schedule_daily_budget_pattern(schedule, len(scheduled_decks))
     if not budget_pattern:
@@ -1187,7 +1233,11 @@ def _balance_first_queue_state_for_day_index(
 
     today_budget = budget_pattern[raw_day_index % len(budget_pattern)]
     due_today = queue_before_today[: max(0, today_budget)]
-    today_events = [event for event in all_events if event.day_index == raw_day_index]
+    today_events = (
+        [event for event in all_events if event.day_index == raw_day_index]
+        if include_current_day_events
+        else []
+    )
     studied_due_today = {event.deck_id for event in today_events if event.deck_id in due_today}
 
     queue_now = list(queue_before_today)
@@ -1209,6 +1259,8 @@ def _balance_first_queue_state_for_day_index(
             next_offsets[deck_id] = 0
 
     future_queue = _rotate_front_slice_to_back(queue_now, len(pending_due_today))
+    if available_deck_ids is not None:
+        future_queue = [deck_id for deck_id in future_queue if deck_id in available_deck_ids]
     cycle_length = _schedule_cycle_length(schedule)
     for offset in range(1, cycle_length + 1):
         budget = budget_pattern[(raw_day_index + offset) % len(budget_pattern)]
@@ -1224,8 +1276,12 @@ def _balance_first_queue_state_for_day_index(
     debug["last_offset_sample"] = {str(deck.deck_id): last_offsets.get(deck.deck_id) for deck in scheduled_decks[:12]}
     _set_last_balance_first_debug(debug, event="queue_state")
 
+    if include_current_day_events and available_deck_ids is not None:
+        queue_now = [deck_id for deck_id in queue_now if deck_id in available_deck_ids]
+
     return {
         "queue_now": queue_now,
+        "available_deck_ids": available_deck_ids,
         "last_offsets": last_offsets,
         "next_offsets": next_offsets,
         "debug": debug,

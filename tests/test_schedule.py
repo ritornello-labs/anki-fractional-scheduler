@@ -26,6 +26,7 @@ class FakeBalanceCol:
         revlog_rows: list[tuple[int, int]] | None = None,
         deck_card_ids: dict[int, list[int]] | None = None,
         card_first_reviews: dict[int, int | None] | None = None,
+        available_deck_ids: set[int] | None = None,
     ) -> None:
         self.conf = {"rollover": 4}
         self.db = self
@@ -36,9 +37,14 @@ class FakeBalanceCol:
         self._revlog_rows = revlog_rows or []
         self._deck_card_ids = deck_card_ids or {}
         self._card_first_reviews = card_first_reviews or {}
+        self._available_deck_ids = (
+            {item.deck_id for item in self._decks} if available_deck_ids is None else available_deck_ids
+        )
 
     def all(self, sql: str, *_args):
         lowered = sql.lower()
+        if "select distinct did" in lowered:
+            return [(deck_id,) for deck_id in sorted(self._available_deck_ids)]
         if "from cards" in lowered:
             return list(self._card_rows)
         if "from revlog" in lowered:
